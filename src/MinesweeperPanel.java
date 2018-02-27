@@ -8,10 +8,12 @@ import javax.swing.JPanel;
 public class MinesweeperPanel extends JPanel {
 
 	MinesweeperBtn[][] mainArray;
-	public final static int ROWS = 5;
-	public final static int COLS = 5;
+	private int ROWS;
+	private int COLS;
 
-	public MinesweeperPanel() {
+	public MinesweeperPanel(int bombCount, int Cols, int Rows) {
+		ROWS = Rows;
+		COLS = Cols;
 		this.setLayout(new GridLayout(ROWS, COLS));
 		ExposeMouse exposeMouse = new ExposeMouse();
 		this.mainArray = new MinesweeperBtn[COLS][];
@@ -27,6 +29,10 @@ public class MinesweeperPanel extends JPanel {
 			for (int i = 0; i < mainArray.length; i++) {
 				this.add(mainArray[i][j]);
 			}
+		}
+
+		for (int i = 0; i < bombCount; i++) {
+			addRandMine();
 		}
 	}
 

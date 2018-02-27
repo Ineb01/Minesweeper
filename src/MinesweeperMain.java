@@ -7,12 +7,8 @@ public class MinesweeperMain extends JFrame {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setVisible(true);
 
-		minesweeperPanel = new MinesweeperPanel();
+		minesweeperPanel = new MinesweeperPanel(12, 10, 10);
 		this.add(minesweeperPanel);
-
-		for (int i = 0; i < 1; i++) {
-			minesweeperPanel.addRandMine();
-		}
 
 		this.pack();
 
