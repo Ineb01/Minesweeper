@@ -67,7 +67,7 @@ public class MinesweeperPanel extends JPanel {
 				}
 			}
 		} else if (returnVal < 0) {
-			
+
 			for (int j = 0; j < mainArray[0].length; j++) {
 				for (int i = 0; i < mainArray.length; i++) {
 					mainArray[i][j].expose();
@@ -77,17 +77,17 @@ public class MinesweeperPanel extends JPanel {
 		}
 	}
 
-	private class ExposeMouse implements MouseListener{
+	private class ExposeMouse implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if(arg0.getButton() == MouseEvent.BUTTON1) {
-				if(!((MinesweeperBtn)arg0.getSource()).flaged) {
-					exposeBtn((MinesweeperBtn)arg0.getSource());
+			if (arg0.getButton() == MouseEvent.BUTTON1) {
+				if (!((MinesweeperBtn) arg0.getSource()).flaged) {
+					exposeBtn((MinesweeperBtn) arg0.getSource());
 				}
 			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
-				if(!((MinesweeperBtn)arg0.getSource()).isExposed) {
-					((MinesweeperBtn)arg0.getSource()).toggleFlag();
+				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
+					((MinesweeperBtn) arg0.getSource()).toggleFlag();
 				}
 			}
 		}
@@ -95,27 +95,27 @@ public class MinesweeperPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
-	
+
 }

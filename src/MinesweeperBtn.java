@@ -57,7 +57,7 @@ public class MinesweeperBtn extends JPanel {
 		flaged = !flaged;
 		updateStates();
 	}
-	
+
 	public int getXpos() {
 		return x;
 	}
@@ -65,17 +65,18 @@ public class MinesweeperBtn extends JPanel {
 	public int getYpos() {
 		return y;
 	}
+
 	public void updateStates() {
-		if(flaged) {
+		if (flaged) {
 			this.setBackground(Color.GREEN);
 		} else {
-			if(isMine) {
+			if (isMine) {
 				this.setBackground(Color.RED);
 			} else {
 				this.setBackground(Color.BLACK);
 			}
 		}
-		if(isExposed) {
+		if (isExposed) {
 			countLabel.setForeground(Color.BLUE);
 		}
 	}
