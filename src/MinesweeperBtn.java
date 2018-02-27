@@ -10,7 +10,7 @@ public class MinesweeperBtn extends JPanel {
 
 	private int count = 0;
 	public boolean isMine = false;
-	private JLabel countLabel = new JLabel("0");
+	private JLabel countLabel = new JLabel("");
 	private int x;
 	private int y;
 	public boolean isExposed = false;
@@ -21,13 +21,13 @@ public class MinesweeperBtn extends JPanel {
 		this.y = y;
 		this.addMouseListener(m);
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		this.setBackground(Color.BLACK);
+		updateStates();
 		this.add(countLabel);
 	}
 
 	public void countUp() {
 		count++;
-		this.countLabel.setText("" + count);
+		updateStates();
 	}
 
 	public int getCount() {
@@ -40,7 +40,7 @@ public class MinesweeperBtn extends JPanel {
 
 	public void setMine() {
 		this.isMine = true;
-		this.setBackground(Color.RED);
+		updateStates();
 	}
 
 	public int expose() {
@@ -70,14 +70,18 @@ public class MinesweeperBtn extends JPanel {
 		if (flaged) {
 			this.setBackground(Color.GREEN);
 		} else {
-			if (isMine) {
-				this.setBackground(Color.RED);
+			if (isExposed) {
+				if (isMine) {
+					this.setBackground(Color.RED);
+				} else {
+					this.countLabel.setText("" + count);
+					countLabel.setForeground(Color.BLUE);
+					this.setBackground(Color.BLACK);
+				}
 			} else {
-				this.setBackground(Color.BLACK);
+				this.setBackground(Color.GRAY);
 			}
 		}
-		if (isExposed) {
-			countLabel.setForeground(Color.BLUE);
-		}
+		
 	}
 }
