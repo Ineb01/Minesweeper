@@ -11,16 +11,16 @@ public class MinesweeperPanel extends JPanel {
 	private int ROWS;
 	private int COLS;
 
-	public MinesweeperPanel(int bombCount, int Cols, int Rows) {
-		ROWS = Rows;
-		COLS = Cols;
+	public MinesweeperPanel(int bombCount, int cols, int rows) {
+		ROWS = rows;
+		COLS = cols;
 		this.setLayout(new GridLayout(ROWS, COLS));
 		ExposeMouse exposeMouse = new ExposeMouse();
 		this.mainArray = new MinesweeperBtn[COLS][];
 		for (int i = 0; i < mainArray.length; i++) {
 			mainArray[i] = new MinesweeperBtn[ROWS];
 			for (int j = 0; j < mainArray[i].length; j++) {
-				mainArray[i][j] = new MinesweeperBtn(new ExposeMouse(), i, j);
+				mainArray[i][j] = new MinesweeperBtn(exposeMouse, i, j);
 
 			}
 		}
@@ -111,12 +111,31 @@ public class MinesweeperPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
+			boolean win = true;
 			if (arg0.getButton() == MouseEvent.BUTTON1) {
 				exposeBtn((MinesweeperBtn) arg0.getSource());
 			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
 					((MinesweeperBtn) arg0.getSource()).toggleFlag();
 				}
+			}
+			for (int j = 0; j < mainArray[0].length; j++) {
+				for (int i = 0; i < mainArray.length; i++) {
+					if(mainArray[i][j].flagged && !mainArray[i][j].isMine) {
+						win = false;
+					}
+					if(!mainArray[i][j].flagged && mainArray[i][j].isMine) {
+						win = false;
+					}
+				}
+			}
+			if(win) {
+				for (int j = 0; j < mainArray[0].length; j++) {
+					for (int i = 0; i < mainArray.length; i++) {
+						mainArray[i][j].forceExpose();
+					}
+				}
+				JOptionPane.showMessageDialog(mainArray[0][0], "Winner");
 			}
 		}
 
