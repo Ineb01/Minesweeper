@@ -1,21 +1,44 @@
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MinesweeperPanel extends JPanel {
 
 	MinesweeperBtn[][] mainArray;
+	
 	private int ROWS;
 	private int COLS;
+	
+	private JLabel bombCountDisplay = new JLabel();
+	private int flagCounter = 0;
+	private JLabel countLabel = new JLabel("0");
+	private JPanel mineField = new JPanel();
+	private JPanel counterPanel = new JPanel();
 
 	public MinesweeperPanel(int bombCount, int cols, int rows) {
+		
 		ROWS = rows;
 		COLS = cols;
-		this.setLayout(new GridLayout(ROWS, COLS));
+		
+		this.setLayout(new BorderLayout());
+
+		counterPanel.setLayout(new GridLayout(1, 2));
+		this.add(counterPanel, BorderLayout.NORTH);
+		
+		this.bombCountDisplay.setText(""+bombCount);
+		counterPanel.add(bombCountDisplay);
+		counterPanel.add(countLabel);
+		
+		mineField.setLayout(new GridLayout(ROWS, COLS));
+		this.add(mineField, BorderLayout.CENTER);
+		
 		ExposeMouse exposeMouse = new ExposeMouse();
+		
 		this.mainArray = new MinesweeperBtn[COLS][];
 		for (int i = 0; i < mainArray.length; i++) {
 			mainArray[i] = new MinesweeperBtn[ROWS];
@@ -27,7 +50,7 @@ public class MinesweeperPanel extends JPanel {
 
 		for (int j = 0; j < mainArray[0].length; j++) {
 			for (int i = 0; i < mainArray.length; i++) {
-				this.add(mainArray[i][j]);
+				mineField.add(mainArray[i][j]);
 			}
 		}
 
@@ -117,6 +140,13 @@ public class MinesweeperPanel extends JPanel {
 			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
 					((MinesweeperBtn) arg0.getSource()).toggleFlag();
+					if(((MinesweeperBtn) arg0.getSource()).flagged) {
+						flagCounter++;
+						countLabel.setText(""+flagCounter);
+					} else {
+						flagCounter--;
+						countLabel.setText(""+flagCounter);
+					}
 				}
 			}
 			for (int j = 0; j < mainArray[0].length; j++) {
