@@ -31,8 +31,14 @@ public class MinesweeperPanel extends JPanel {
 			}
 		}
 
-		for (int i = 0; i < bombCount; i++) {
-			addRandMine();
+		if(bombCount<COLS*ROWS) {
+			for (int i = 0; i < bombCount; i++) {
+				addRandMine();
+			}
+		} else {
+			for (int i = 0; i < COLS*ROWS; i++) {
+				addRandMine();
+			}
 		}
 	}
 
