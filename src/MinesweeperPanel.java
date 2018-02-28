@@ -88,9 +88,7 @@ public class MinesweeperPanel extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			if (arg0.getButton() == MouseEvent.BUTTON1) {
-				if (!((MinesweeperBtn) arg0.getSource()).flaged) {
-					exposeBtn((MinesweeperBtn) arg0.getSource());
-				}
+				exposeBtn((MinesweeperBtn) arg0.getSource());
 			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
 				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
 					((MinesweeperBtn) arg0.getSource()).toggleFlag();
