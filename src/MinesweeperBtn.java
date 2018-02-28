@@ -45,12 +45,16 @@ public class MinesweeperBtn extends JPanel {
 	}
 
 	public int expose() {
-		this.isExposed = true;
-		updateStates();
-		if (isMine) {
-			return -1;
+		if (!flaged) {
+			this.isExposed = true;
+			updateStates();
+			if (isMine) {
+				return -1;
+			} else {
+				return count;
+			}
 		} else {
-			return count;
+			return 1;
 		}
 	}
 
