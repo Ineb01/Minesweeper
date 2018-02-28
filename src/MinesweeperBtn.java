@@ -14,7 +14,7 @@ public class MinesweeperBtn extends JPanel {
 	private int x;
 	private int y;
 	public boolean isExposed = false;
-	public boolean flaged = false;
+	public boolean flagged = false;
 
 	public MinesweeperBtn(MouseListener m, int x, int y) {
 		this.x = x;
@@ -45,7 +45,7 @@ public class MinesweeperBtn extends JPanel {
 	}
 
 	public int expose() {
-		if (!flaged) {
+		if (!flagged) {
 			this.isExposed = true;
 			updateStates();
 			if (isMine) {
@@ -58,8 +58,13 @@ public class MinesweeperBtn extends JPanel {
 		}
 	}
 
+	public void forceExpose() {
+		this.isExposed = true;
+		updateStates();
+	}
+
 	public void toggleFlag() {
-		flaged = !flaged;
+		flagged = !flagged;
 		updateStates();
 	}
 
@@ -72,8 +77,18 @@ public class MinesweeperBtn extends JPanel {
 	}
 
 	public void updateStates() {
-		if (flaged) {
+		if (flagged) {
 			this.setBackground(Color.GREEN);
+			if (isExposed) {
+				if (isMine) {
+					this.setBackground(Color.RED);
+					countLabel.setForeground(Color.GREEN);
+					countLabel.setText("O");
+				} else {
+					countLabel.setForeground(Color.BLACK);
+					countLabel.setText("" + count);
+				}
+			}
 		} else {
 			if (isExposed) {
 				if (isMine) {

@@ -82,7 +82,7 @@ public class MinesweeperPanel extends JPanel {
 
 			for (int j = 0; j < mainArray[0].length; j++) {
 				for (int i = 0; i < mainArray.length; i++) {
-					mainArray[i][j].expose();
+					mainArray[i][j].forceExpose();
 				}
 			}
 			JOptionPane.showMessageDialog(this, "Looser");
@@ -93,13 +93,8 @@ public class MinesweeperPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
-			if (arg0.getButton() == MouseEvent.BUTTON1) {
-				exposeBtn((MinesweeperBtn) arg0.getSource());
-			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
-				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
-					((MinesweeperBtn) arg0.getSource()).toggleFlag();
-				}
-			}
+			// TODO Auto-generated method stub
+		
 		}
 
 		@Override
@@ -116,8 +111,13 @@ public class MinesweeperPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-
+			if (arg0.getButton() == MouseEvent.BUTTON1) {
+				exposeBtn((MinesweeperBtn) arg0.getSource());
+			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
+				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
+					((MinesweeperBtn) arg0.getSource()).toggleFlag();
+				}
+			}
 		}
 
 		@Override
