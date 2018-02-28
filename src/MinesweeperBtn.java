@@ -8,37 +8,37 @@ import javax.swing.JPanel;
 
 public class MinesweeperBtn extends JPanel {
 
+	// neighbour counter 
 	private int count = 0;
-	public boolean isMine = false;
 	private JLabel countLabel = new JLabel("");
-	private int x;
-	private int y;
+	
+	// states
+	public boolean isMine = false;
 	public boolean isExposed = false;
 	public boolean flagged = false;
+	
+	// x and y in mainArray in MinesweeperPanel
+	private int x;
+	private int y;
 
 	public MinesweeperBtn(MouseListener m, int x, int y) {
 		this.x = x;
 		this.y = y;
+		
 		this.addMouseListener(m);
+		
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-		updateStates();
 		this.setPreferredSize(new Dimension(25, 25));
 		this.add(countLabel);
+		
+		updateStates();
 	}
 
 	public void countUp() {
 		count++;
 		updateStates();
 	}
-
-	public int getCount() {
-		return this.count;
-	}
-
-	public boolean getMine() {
-		return this.isMine;
-	}
-
+	
 	public void setMine() {
 		this.isMine = true;
 		updateStates();
@@ -76,6 +76,7 @@ public class MinesweeperBtn extends JPanel {
 		return y;
 	}
 
+	// update all colors and texts according to states
 	public void updateStates() {
 		if (flagged) {
 			this.setBackground(Color.GREEN);

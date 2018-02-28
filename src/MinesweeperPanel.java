@@ -9,47 +9,40 @@ import javax.swing.JPanel;
 
 public class MinesweeperPanel extends JPanel {
 
-	MinesweeperBtn[][] mainArray;
+	private MinesweeperBtn[][] mainArray;
 	
 	private int ROWS;
 	private int COLS;
 	
+	// all counters and a counterPanel to hold them all
 	private JLabel bombCountDisplay = new JLabel();
 	private int flagCounter = 0;
 	private JLabel countLabel = new JLabel("0");
-	private JPanel mineField = new JPanel();
 	private JPanel counterPanel = new JPanel();
+	
+	private JPanel mineField = new JPanel();
 
 	public MinesweeperPanel(int bombCount, int cols, int rows) {
 		
 		ROWS = rows;
 		COLS = cols;
 		
+		// layout
 		this.setLayout(new BorderLayout());
-
 		counterPanel.setLayout(new GridLayout(1, 2));
 		this.add(counterPanel, BorderLayout.NORTH);
-		
 		this.bombCountDisplay.setText(""+bombCount);
 		counterPanel.add(bombCountDisplay);
 		counterPanel.add(countLabel);
-		
 		mineField.setLayout(new GridLayout(ROWS, COLS));
 		this.add(mineField, BorderLayout.CENTER);
 		
+		// initialize and add all buttons
 		ExposeMouse exposeMouse = new ExposeMouse();
-		
-		this.mainArray = new MinesweeperBtn[COLS][];
-		for (int i = 0; i < mainArray.length; i++) {
-			mainArray[i] = new MinesweeperBtn[ROWS];
-			for (int j = 0; j < mainArray[i].length; j++) {
-				mainArray[i][j] = new MinesweeperBtn(exposeMouse, i, j);
-
-			}
-		}
-
+		this.mainArray = new MinesweeperBtn[COLS][ROWS];
 		for (int j = 0; j < mainArray[0].length; j++) {
 			for (int i = 0; i < mainArray.length; i++) {
+				mainArray[i][j] = new MinesweeperBtn(exposeMouse, i, j);
 				mineField.add(mainArray[i][j]);
 			}
 		}
@@ -70,7 +63,7 @@ public class MinesweeperPanel extends JPanel {
 		int randRow = (int) (Math.random() * ROWS);
 		boolean mineSet = false;
 		while (!mineSet) {
-			if (!mainArray[randCol][randRow].getMine()) {
+			if (!mainArray[randCol][randRow].isMine) {
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
 						if ((randRow + j >= 0 && randRow + j < ROWS) && (randCol + i >= 0 && randCol + i < COLS)) {
@@ -86,7 +79,7 @@ public class MinesweeperPanel extends JPanel {
 			}
 		}
 	}
-
+	// recursive function for uncovering 0s and all fields if you step on a mine
 	private void exposeBtn(MinesweeperBtn mBtn) {
 		int returnVal = mBtn.expose();
 		int btnX = mBtn.getXpos();
@@ -102,7 +95,6 @@ public class MinesweeperPanel extends JPanel {
 				}
 			}
 		} else if (returnVal < 0) {
-
 			for (int j = 0; j < mainArray[0].length; j++) {
 				for (int i = 0; i < mainArray.length; i++) {
 					mainArray[i][j].forceExpose();
@@ -134,10 +126,9 @@ public class MinesweeperPanel extends JPanel {
 
 		@Override
 		public void mousePressed(MouseEvent arg0) {
-			boolean win = true;
-			if (arg0.getButton() == MouseEvent.BUTTON1) {
+			if (arg0.getButton() == MouseEvent.BUTTON1) { // left mouseBtn
 				exposeBtn((MinesweeperBtn) arg0.getSource());
-			} else if (arg0.getButton() == MouseEvent.BUTTON3) {
+			} else if (arg0.getButton() == MouseEvent.BUTTON3) { // right mouseBtn
 				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
 					((MinesweeperBtn) arg0.getSource()).toggleFlag();
 					if(((MinesweeperBtn) arg0.getSource()).flagged) {
@@ -149,6 +140,9 @@ public class MinesweeperPanel extends JPanel {
 					}
 				}
 			}
+			
+			// win detection
+			boolean win = true;
 			for (int j = 0; j < mainArray[0].length; j++) {
 				for (int i = 0; i < mainArray.length; i++) {
 					if(mainArray[i][j].flagged && !mainArray[i][j].isMine) {
