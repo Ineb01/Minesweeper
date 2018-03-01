@@ -116,7 +116,7 @@ public class MinesweeperPanel extends JPanel {
 					mainArray[i][j].forceExpose();
 				}
 			}
-			JOptionPane.showMessageDialog(this, "Looser");
+			JOptionPane.showMessageDialog(this, "Loser");
 			reset();
 		}
 	}
