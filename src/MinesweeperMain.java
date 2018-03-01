@@ -1,11 +1,15 @@
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MinesweeperMain extends JFrame {
 	MinesweeperPanel minesweeperPanel;
 
 	public MinesweeperMain() {
 
-		minesweeperPanel = new MinesweeperPanel(12, 10, 10);
+		int dimensions = Integer.parseInt(JOptionPane.showInputDialog("Dimensions"));
+		int mines = Integer.parseInt(JOptionPane.showInputDialog("Mines"));
+		
+		minesweeperPanel = new MinesweeperPanel(mines, dimensions, dimensions);
 		this.add(minesweeperPanel);
 
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -9,13 +9,13 @@ import javax.swing.JPanel;
 public class MinesweeperBtn extends JPanel {
 
 	// neighbour counter 
-	private int count = 0;
-	private JLabel countLabel = new JLabel("");
+	private int neighbourCount = 0;
+	private JLabel neighbourCountLabel = new JLabel("");
 	
 	// states
 	public boolean isMine = false;
 	public boolean isExposed = false;
-	public boolean flagged = false;
+	public boolean isFlagged = false;
 	
 	// x and y in mainArray in MinesweeperPanel
 	private int x;
@@ -29,13 +29,13 @@ public class MinesweeperBtn extends JPanel {
 		
 		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 		this.setPreferredSize(new Dimension(25, 25));
-		this.add(countLabel);
+		this.add(neighbourCountLabel);
 		
 		updateStates();
 	}
 
 	public void countUp() {
-		count++;
+		neighbourCount++;
 		updateStates();
 	}
 	
@@ -45,13 +45,13 @@ public class MinesweeperBtn extends JPanel {
 	}
 
 	public int expose() {
-		if (!flagged) {
+		if (!isFlagged) {
 			this.isExposed = true;
 			updateStates();
 			if (isMine) {
 				return -1;
 			} else {
-				return count;
+				return neighbourCount;
 			}
 		} else {
 			return 1;
@@ -64,7 +64,7 @@ public class MinesweeperBtn extends JPanel {
 	}
 
 	public void toggleFlag() {
-		flagged = !flagged;
+		isFlagged = !isFlagged;
 		updateStates();
 	}
 
@@ -78,16 +78,16 @@ public class MinesweeperBtn extends JPanel {
 
 	// update all colors and texts according to states
 	public void updateStates() {
-		if (flagged) {
+		if (isFlagged) {
 			this.setBackground(Color.GREEN);
 			if (isExposed) {
 				if (isMine) {
 					this.setBackground(Color.RED);
-					countLabel.setForeground(Color.GREEN);
-					countLabel.setText("O");
+					neighbourCountLabel.setForeground(Color.GREEN);
+					neighbourCountLabel.setText("O");
 				} else {
-					countLabel.setForeground(Color.BLACK);
-					countLabel.setText("" + count);
+					neighbourCountLabel.setForeground(Color.BLACK);
+					neighbourCountLabel.setText("" + neighbourCount);
 				}
 			}
 		} else {
@@ -95,34 +95,34 @@ public class MinesweeperBtn extends JPanel {
 				if (isMine) {
 					this.setBackground(Color.RED);
 				} else {
-					this.countLabel.setText("" + count);
-					switch (count) {
+					this.neighbourCountLabel.setText("" + neighbourCount);
+					switch (neighbourCount) {
 					case 0:
-						countLabel.setForeground(Color.DARK_GRAY);
+						neighbourCountLabel.setForeground(Color.DARK_GRAY);
 						break;
 					case 1:
-						countLabel.setForeground(Color.WHITE);
+						neighbourCountLabel.setForeground(Color.WHITE);
 						break;
 					case 2:
-						countLabel.setForeground(Color.YELLOW);
+						neighbourCountLabel.setForeground(Color.YELLOW);
 						break;
 					case 3:
-						countLabel.setForeground(Color.ORANGE);
+						neighbourCountLabel.setForeground(Color.ORANGE);
 						break;
 					case 4:
-						countLabel.setForeground(Color.RED);
+						neighbourCountLabel.setForeground(Color.RED);
 						break;
 					case 5:
-						countLabel.setForeground(Color.GREEN);
+						neighbourCountLabel.setForeground(Color.GREEN);
 						break;
 					case 6:
-						countLabel.setForeground(Color.CYAN);
+						neighbourCountLabel.setForeground(Color.CYAN);
 						break;
 					case 7:
-						countLabel.setForeground(Color.BLUE);
+						neighbourCountLabel.setForeground(Color.BLUE);
 						break;
 					case 8:
-						countLabel.setForeground(Color.PINK);
+						neighbourCountLabel.setForeground(Color.PINK);
 						break;
 					}
 					this.setBackground(Color.BLACK);

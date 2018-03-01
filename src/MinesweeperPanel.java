@@ -15,9 +15,10 @@ public class MinesweeperPanel extends JPanel {
 	private int COLS;
 	
 	// all counters and a counterPanel to hold them all
-	private JLabel bombCountDisplay = new JLabel();
+	private int bombCount = 0;
+	private JLabel bombCountLabel = new JLabel();
 	private int flagCounter = 0;
-	private JLabel countLabel = new JLabel("0");
+	private JLabel flagCountLabel = new JLabel("0");
 	private JPanel counterPanel = new JPanel();
 	
 	private JPanel mineField = new JPanel();
@@ -27,37 +28,20 @@ public class MinesweeperPanel extends JPanel {
 		ROWS = rows;
 		COLS = cols;
 		
+		this.bombCount = bombCount;
 		// layout
 		this.setLayout(new BorderLayout());
 		counterPanel.setLayout(new GridLayout(1, 2));
 		this.add(counterPanel, BorderLayout.NORTH);
-		this.bombCountDisplay.setText(""+bombCount);
-		counterPanel.add(bombCountDisplay);
-		counterPanel.add(countLabel);
+		this.bombCountLabel.setText(""+bombCount);
+		counterPanel.add(bombCountLabel);
+		counterPanel.add(flagCountLabel);
 		mineField.setLayout(new GridLayout(ROWS, COLS));
 		this.add(mineField, BorderLayout.CENTER);
 		
-		// initialize and add all buttons
-		ExposeMouse exposeMouse = new ExposeMouse();
-		this.mainArray = new MinesweeperBtn[COLS][ROWS];
-		for (int j = 0; j < mainArray[0].length; j++) {
-			for (int i = 0; i < mainArray.length; i++) {
-				mainArray[i][j] = new MinesweeperBtn(exposeMouse, i, j);
-				mineField.add(mainArray[i][j]);
-			}
-		}
-
-		if(bombCount<COLS*ROWS) {
-			for (int i = 0; i < bombCount; i++) {
-				addRandMine();
-			}
-		} else {
-			for (int i = 0; i < COLS*ROWS; i++) {
-				addRandMine();
-			}
-		}
+		reset();
 	}
-
+	
 	public void addRandMine() {
 		int randCol = (int) (Math.random() * COLS);
 		int randRow = (int) (Math.random() * ROWS);
@@ -79,6 +63,34 @@ public class MinesweeperPanel extends JPanel {
 			}
 		}
 	}
+	
+	// initialize and add all buttons
+	public void reset() {
+		mineField.removeAll();
+		
+		ExposeMouse exposeMouse = new ExposeMouse();
+		this.mainArray = new MinesweeperBtn[COLS][ROWS];
+		for (int j = 0; j < mainArray[0].length; j++) {
+			for (int i = 0; i < mainArray.length; i++) {
+				mainArray[i][j] = new MinesweeperBtn(exposeMouse, i, j);
+				mineField.add(mainArray[i][j]);
+			}
+		}
+
+		if(bombCount<COLS*ROWS) {
+			for (int i = 0; i < bombCount; i++) {
+				addRandMine();
+			}
+		} else {
+			for (int i = 0; i < COLS*ROWS; i++) {
+				addRandMine();
+			}
+		}
+		
+		this.setVisible(false);
+		this.setVisible(true);
+	}
+	
 	// recursive function for uncovering 0s and all fields if you step on a mine
 	private void exposeBtn(MinesweeperBtn mBtn) {
 		int returnVal = mBtn.expose();
@@ -101,6 +113,7 @@ public class MinesweeperPanel extends JPanel {
 				}
 			}
 			JOptionPane.showMessageDialog(this, "Looser");
+			reset();
 		}
 	}
 
@@ -131,12 +144,12 @@ public class MinesweeperPanel extends JPanel {
 			} else if (arg0.getButton() == MouseEvent.BUTTON3) { // right mouseBtn
 				if (!((MinesweeperBtn) arg0.getSource()).isExposed) {
 					((MinesweeperBtn) arg0.getSource()).toggleFlag();
-					if(((MinesweeperBtn) arg0.getSource()).flagged) {
+					if(((MinesweeperBtn) arg0.getSource()).isFlagged) {
 						flagCounter++;
-						countLabel.setText(""+flagCounter);
+						flagCountLabel.setText(""+flagCounter);
 					} else {
 						flagCounter--;
-						countLabel.setText(""+flagCounter);
+						flagCountLabel.setText(""+flagCounter);
 					}
 				}
 			}
@@ -145,10 +158,10 @@ public class MinesweeperPanel extends JPanel {
 			boolean win = true;
 			for (int j = 0; j < mainArray[0].length; j++) {
 				for (int i = 0; i < mainArray.length; i++) {
-					if(mainArray[i][j].flagged && !mainArray[i][j].isMine) {
+					if(mainArray[i][j].isFlagged && !mainArray[i][j].isMine) {
 						win = false;
 					}
-					if(!mainArray[i][j].flagged && mainArray[i][j].isMine) {
+					if(!mainArray[i][j].isFlagged && mainArray[i][j].isMine) {
 						win = false;
 					}
 				}
@@ -160,6 +173,7 @@ public class MinesweeperPanel extends JPanel {
 					}
 				}
 				JOptionPane.showMessageDialog(mainArray[0][0], "Winner");
+				reset();
 			}
 		}
 
