@@ -66,6 +66,10 @@ public class MinesweeperPanel extends JPanel {
 	
 	// initialize and add all buttons
 	public void reset() {
+		
+		flagCounter = 0;
+		flagCountLabel.setText(""+flagCounter);
+		
 		mineField.removeAll();
 		
 		ExposeMouse exposeMouse = new ExposeMouse();
