@@ -15,7 +15,9 @@ public class MinesweeperBtn extends JPanel {
 	// states
 	public boolean isMine = false;
 	public boolean isExposed = false;
-	public boolean isFlagged = false;
+	public boolean isFlagged = false;  
+	
+	
 	
 	// x and y in mainArray in MinesweeperPanel
 	private int x;
@@ -76,6 +78,9 @@ public class MinesweeperBtn extends JPanel {
 		return y;
 	}
 
+	// Colors for Neighbours
+	public static Color countColor[] = {Color.DARK_GRAY,Color.WHITE,Color.YELLOW,Color.ORANGE,Color.RED,Color.GREEN,Color.CYAN,Color.BLUE,Color.PINK};
+
 	// update all colors and texts according to states
 	public void updateStates() {
 		if (isFlagged) {
@@ -96,35 +101,7 @@ public class MinesweeperBtn extends JPanel {
 					this.setBackground(Color.RED);
 				} else {
 					this.neighbourCountLabel.setText("" + neighbourCount);
-					switch (neighbourCount) {
-					case 0:
-						neighbourCountLabel.setForeground(Color.DARK_GRAY);
-						break;
-					case 1:
-						neighbourCountLabel.setForeground(Color.WHITE);
-						break;
-					case 2:
-						neighbourCountLabel.setForeground(Color.YELLOW);
-						break;
-					case 3:
-						neighbourCountLabel.setForeground(Color.ORANGE);
-						break;
-					case 4:
-						neighbourCountLabel.setForeground(Color.RED);
-						break;
-					case 5:
-						neighbourCountLabel.setForeground(Color.GREEN);
-						break;
-					case 6:
-						neighbourCountLabel.setForeground(Color.CYAN);
-						break;
-					case 7:
-						neighbourCountLabel.setForeground(Color.BLUE);
-						break;
-					case 8:
-						neighbourCountLabel.setForeground(Color.PINK);
-						break;
-					}
+					neighbourCountLabel.setForeground(countColor[neighbourCount]);
 					this.setBackground(Color.BLACK);
 				}
 			} else {
